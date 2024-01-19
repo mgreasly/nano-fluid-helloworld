@@ -1,8 +1,6 @@
-import React from "react";
-//import { SharedTree } from "@fluidframework/shared-tree";
-//import { SchemaFactory } from "@fluidframework/shared-object-schema";
-//import { TreeConfiguration } from "@fluidframework/shared-tree";
-//import { TinyliciousClient } from "@fluidframework/tinylicious-client";
+import React, { useEffect, useState } from "react";
+import { SharedTree, TreeConfiguration, SchemaFactory, Tree } from "fluid-framework";
+import { TinyliciousClient } from "@fluidframework/tinylicious-client";
 
 const DiceCtrl = ({ face }) => {
     const content = String.fromCodePoint(0x267f + face);
@@ -15,15 +13,21 @@ const Button = ({ setFace }) => {
 }
 
 export default () => {
-//    const client = new TinyliciousClient();
-//    const containerSchema = {
-//        initialObjects: { diceTree: SharedTree },
-//    };
-//    const sf = new SchemaFactory("nano-fluid-helloworld");
-//    class Dice extends sf.object("Dice", { value: sf.number }) { };
-//    const treeConfiguration = new TreeConfiguration(Dice, () => new Dice({ value: 1 }));
 
-    const [face, setFace] = React.useState(0);
+    const [face, setFace] = useState(0);
+
+    useEffect(() => {
+        const client = new TinyliciousClient();
+        const containerSchema = {
+            initialObjects: { diceTree: SharedTree },
+        };
+        //const sf = new SchemaFactory("nano-fluid-helloworld");
+        //class Dice extends sf.object("Dice", { value: sf.number }) { };
+        //const treeConfiguration = new TreeConfiguration(Dice, () => new Dice({ value: 1 }));
+        setFace(7);
+    }, []
+    );
+
     return (
         <div className="wrapper">
             <DiceCtrl face={face} />
